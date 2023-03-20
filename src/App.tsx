@@ -1,24 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { ConfigurationType } from './types/InputGroupType';
+import useInputGroup from './hooks/useInputGroup';
+import './App.css'
+
+const initConfiguration: ConfigurationType[] = [
+  {
+    id: "first_name",
+    type: "inputText",
+    label: "First Name",
+    defaultValue: "Some first name"
+  },
+  {
+    id:  "last_name",
+    type: "inputText",
+    label: "Last Name"
+  },
+  {
+    id: "email",
+    type: "inputEmail",
+    label: "Email",
+    required: true
+  },
+  {
+    id: "password",
+    type: "inputPassword",
+    label: "Password",
+    required: true
+  },
+]
 
 function App() {
+  const [inputFields, values, isValid] = useInputGroup({ inputs: initConfiguration });
+  console.log('values', values);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='App'>
+      <form>
+        {inputFields}
+        <button type="submit" disabled={!isValid}>Submit</button>
+      </form>
     </div>
   );
 }
