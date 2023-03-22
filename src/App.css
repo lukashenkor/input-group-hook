@@ -62,3 +62,15 @@ body {
     background-color: #f8d7d0;
     cursor: not-allowed;
 }
+
+.choose-render-block {
+    margin-bottom: 20px;
+}
+
+.choose-render-block > label {
+    display: block;
+}
+
+.choose-render-block > label > input {
+    margin-right: 5px;
+}

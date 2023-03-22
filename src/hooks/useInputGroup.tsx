@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { ConfigurationMetaDataType, ConfigurationType, configTypeToInputAttrs } from "../types/InputGroupType";
-import { checkIsValid, required } from "../utils/validators";
+import { checkIsValid, checkRequired } from "../utils/validators";
 
 
 type ConfigurationProps = {
@@ -32,9 +32,9 @@ const useInputGroup = ({
         rules: [],
       };
       if (input.required) {
-        currentInput.rules.push(required);
+        currentInput.rules.push(checkRequired);
       }
-      const isInputValid = checkIsValid(currentInput, input.defaultValue || "");
+      const isInputValid = checkIsValid(currentInput.rules, input.defaultValue || "");
       currentInput.valid = isInputValid;
       if (!isInputValid) {
         invalid.push(input.id);
@@ -50,7 +50,7 @@ const useInputGroup = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     const currentElement = inputsMetaData.current![name];
-    const isInputValid = checkIsValid(currentElement, value);
+    const isInputValid = checkIsValid(currentElement.rules, value);
     currentElement.valid = isInputValid;
     setValues((prevState) => ({
       ...prevState,

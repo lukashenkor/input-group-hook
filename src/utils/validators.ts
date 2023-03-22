@@ -1,15 +1,14 @@
-import { ConfigurationMetaDataType } from "../types/InputGroupType";
+export type Rules = Array<(val: any) => boolean>
 
-
-export const required = (val: any) => !!val.toString().length;
+export const checkRequired = (val: any) => !!val.toString().length;
 
 
 export const checkIsValid = (
-  obj: ConfigurationMetaDataType,
+  rules: Rules,
   value: string
 ): boolean => {
-  for (let i = 0; i < obj.rules.length; i++) {
-    if (!obj.rules[i](value)) {
+  for (let i = 0; i < rules.length; i++) {
+    if (!rules[i](value)) {
       return false;
     }
   }
